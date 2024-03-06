@@ -43,6 +43,27 @@ def catch_pokemon():
             # user_id= should be set according to your user management logic
         )
 
+        # Serialize the new_pokemon object data for the response
+        pokemon_response = {
+            'poke_id': new_pokemon.poke_id,
+            'pokemon_id': str(new_pokemon.pokemon_id), # Ensure this is a string if your frontend expects it
+            'pokemon_name': new_pokemon.pokemon_name,
+            'image_url': new_pokemon.image_url,
+            'shiny_image_url': new_pokemon.shiny_image_url,
+            'base_experience': new_pokemon.base_experience,
+            'hp': new_pokemon.hp,
+            'attack': new_pokemon.attack,
+            'defense': new_pokemon.defense,
+            'special_attack': new_pokemon.special_attack,
+            'special_defense': new_pokemon.special_defense,
+            'speed': new_pokemon.speed,
+            'type': new_pokemon.type,
+            'abilities': new_pokemon.abilities,
+            'moves': new_pokemon.moves,
+            'date_added': new_pokemon.date_added.isoformat(), # Convert datetime to string
+            # Include other fields as necessary
+        }
+        
         db.session.add(new_pokemon)
         db.session.commit()
 

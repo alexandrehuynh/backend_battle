@@ -62,7 +62,7 @@ class User(db.Model, UserMixin):
 
 class Pokemon(db.Model):
     poke_id = db.Column(db.String(50), primary_key=True, default=lambda: str(uuid.uuid4()))
-    pokemon_id = db.Column(db.Integer, unique=True, nullable=False)
+    pokemon_id = db.Column(db.Integer, unique=False, nullable=False)
     pokemon_name = db.Column(db.String(50), nullable=False)
     image_url = db.Column(db.String(255))  # URL to the default sprite
     shiny_image_url = db.Column(db.String(255))  # URL to the shiny sprite
