@@ -67,6 +67,10 @@ def catch_pokemon():
         db.session.add(new_pokemon)
         db.session.commit()
 
-        return jsonify({'status': 'success', 'message': f"{pokemon_name} added to the database."}), 200
+        return jsonify({
+        'status': 'success',
+        'message': f"{pokemon_name} added to the database.",
+        'pokemon': pokemon_response  # Make sure to include the actual data here
+        }), 200
     else:
         return jsonify({'status': 'error', 'message': 'Pokemon not found'}), 404
