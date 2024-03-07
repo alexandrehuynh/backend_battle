@@ -27,8 +27,8 @@ def catch_pokemon():
             poke_id=str(uuid.uuid4()),  # Assuming auto-generation here, you might not need to explicitly set it
             pokemon_id=pokemon_data['id'],
             pokemon_name=pokemon_data['name'],
-            image_url=pokemon_data['sprites']['other']['home']['front_default'],
-            shiny_image_url=pokemon_data['sprites']['other']['home']['front_shiny'],
+            image_url=pokemon_data['sprites']['other']['showdown']['front_default'],
+            shiny_image_url=pokemon_data['sprites']['other']['showdown']['front_shiny'],
             base_experience=pokemon_data['base_experience'],
             hp=[stat['base_stat'] for stat in pokemon_data['stats'] if stat['stat']['name'] == 'hp'][0],
             attack=[stat['base_stat'] for stat in pokemon_data['stats'] if stat['stat']['name'] == 'attack'][0],
