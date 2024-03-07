@@ -4,6 +4,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager 
 import uuid
 import os
+import json
 import firebase_admin
 from firebase_admin import credentials
 
@@ -43,10 +44,13 @@ migrate = Migrate(app, db) #things we are connecting/migrating (our application 
 # app.json_encoder = JSONEncoder # we are not instantiating this but rather point to this class 
 
 # Access the environment variable
-sdk_path = os.getenv('FIREBASE_CREDENTIALS')
-if not sdk_path:
-    raise ValueError('The FIREBASE_CREDENTIALS environment variable is not set.')
+firebase_credentials_json = os.getenv('FIREBASE_CREDENTIALS')
+if firebase_credentials_json is None:
+      raise ValueError('The FIREBASE_CREDENTIALS environment variable is not set.')
 
-# Initialize Firebase Admin SDK
-cred = credentials.Certificate(sdk_path)
+# Parse the JSON string into a Python dictionary
+firebase_credentials_dict = json.loads(firebase_credentials_json)
+
+# Use the dictionary to initialize Firebase Admin SDK
+cred = credentials.Certificate(firebase_credentials_dict)
 firebase_admin.initialize_app(cred)
