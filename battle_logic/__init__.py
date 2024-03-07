@@ -1,8 +1,11 @@
-from flask import Flask, Blueprint, jsonify
+from flask import Flask, Blueprint, jsonify, send_file
 from flask_migrate import Migrate 
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager 
 import uuid
+import os
+import firebase_admin
+from firebase_admin import credentials
 
 
 
@@ -23,7 +26,7 @@ jwt = JWTManager(app) # allows our app to use JWTMaanager from anywhere
 
 @app.route('/')
 def index():
-    return jsonify({'status': 'success', 'message': 'Pokemon Battle API is online!'})
+    return send_file('./static/images/enterthegate.jpeg', mimetype='image/jpeg')
 
 
 app.register_blueprint(api)
@@ -39,3 +42,11 @@ db.init_app(app)
 migrate = Migrate(app, db) #things we are connecting/migrating (our application to our database)
 # app.json_encoder = JSONEncoder # we are not instantiating this but rather point to this class 
 
+# Access the environment variable
+sdk_path = os.getenv('FIREBASE_CREDENTIALS')
+if not sdk_path:
+    raise ValueError('The FIREBASE_CREDENTIALS environment variable is not set.')
+
+# Initialize Firebase Admin SDK
+cred = credentials.Certificate(sdk_path)
+firebase_admin.initialize_app(cred)
