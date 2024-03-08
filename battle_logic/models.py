@@ -14,41 +14,41 @@ ma = Marshmallow() #makes marshmallow object
 
 
 #think of these as admin (keeping track of what products are available to sell)
-# class User(db.Model, UserMixin): 
-#     #CREATE TABLE User, all the columns we create
-#     user_id = db.Column(db.String, primary_key=True)
-#     email = db.Column(db.String(150), nullable=False, unique=True)
-#     password = db.Column(db.String, nullable=False)
-#     pokemons = db.relationship('Pokemon', backref='user', lazy='dynamic')
+class User(db.Model, UserMixin): 
+    #CREATE TABLE User, all the columns we create
+    user_id = db.Column(db.String, primary_key=True)
+    email = db.Column(db.String(150), nullable=False, unique=True)
+    password = db.Column(db.String, nullable=False)
+    pokemons = db.relationship('Pokemon', backref='user', lazy='dynamic')
 
 
     
-#     date_added = db.Column(db.DateTime, default=datetime.utcnow) #this is going to grab a timestamp as soon as a User object is instantiated
+    date_added = db.Column(db.DateTime, default=datetime.utcnow) #this is going to grab a timestamp as soon as a User object is instantiated
 
 
-    # #INSERT INTO User() Values()
-    # def __init__(self, username, email, password):
-    #     self.user_id = self.set_id()
-    #     self.email = email 
-    #     self.password = self.set_password(password) 
+    #INSERT INTO User() Values()
+    def __init__(self, username, email, password):
+        self.user_id = self.set_id()
+        self.email = email 
+        self.password = self.set_password(password) 
 
 
 
-    # #methods for editting our attributes 
-    # def set_id(self):
-    #     return str(uuid.uuid4()) #all this is doing is creating a unique identification token
+    #methods for editting our attributes 
+    def set_id(self):
+        return str(uuid.uuid4()) #all this is doing is creating a unique identification token
     
 
-    # def get_id(self):
-    #     return str(self.user_id) #UserMixin using this method to grab the user_id on the object logged in
+    def get_id(self):
+        return str(self.user_id) #UserMixin using this method to grab the user_id on the object logged in
     
     
-    # def set_password(self, password):
-    #     return generate_password_hash(password) #hashes the password so it is secure (aka no one can see it)
+    def set_password(self, password):
+        return generate_password_hash(password) #hashes the password so it is secure (aka no one can see it)
     
 
-    # def __repr__(self):
-    #     return f"<User: {self.email}>"
+    def __repr__(self):
+        return f"<User: {self.email}>"
 
 class Pokemon(db.Model):
     poke_id = db.Column(db.String(50), primary_key=True, default=lambda: str(uuid.uuid4()))
