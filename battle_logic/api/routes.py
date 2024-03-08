@@ -17,30 +17,6 @@ from ..models import login_manager, db, Pokemon
 api = Blueprint('api', __name__, url_prefix='/api') # every route needs to be preceeded with /api
 
 
-@api.route('/protected', methods=['POST'])
-def protected():
-    # Extract the token from the Authorization header
-    token_header = request.headers.get('Authorization')
-    if not token_header:
-        return jsonify({"error": "Authorization header is missing"}), 401
-    
-    # The token usually comes in the format "Bearer {TOKEN_VALUE}"
-    id_token = token_header.split('Bearer ')[1]
-    
-    try:
-        # Verify the token with Firebase Admin SDK
-        decoded_token = auth.verify_id_token(id_token)
-        uid = decoded_token['uid']
-        
-        # Now you can use the UID to get user-specific data
-        # and perform operations restricted to authenticated users
-        
-        return jsonify({"message": "Access granted", "uid": uid}), 200
-        
-    except Exception as e:
-        return jsonify({"error": str(e)}), 401
-
-
 @api.route('/catch-pokemon', methods=['POST'])
 def catch_pokemon():
     data = request.json
